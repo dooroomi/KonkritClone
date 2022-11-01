@@ -3,12 +3,7 @@ import styled from "styled-components";
 import Header from "@components/atoms/templates/Header";
 import TopBanner from "@components/atoms/templates/TopBanner";
 import Events from "@components/atoms/templates/Events";
-
-const ItemsOnSale = styled.div`
-  width: 100%;
-  height: 394px;
-  background-color: skyblue;
-`;
+import ItemsOnSale from "@components/atoms/templates/ItemsOnSale";
 
 const OpenseaTopCollections = styled.div`
   width: 100%;
@@ -36,7 +31,7 @@ function App() {
       <Header />
       <TopBanner />
       <Events />
-      <ItemsOnSale>판매중인 아이템</ItemsOnSale>
+      <ItemsOnSale />
       <OpenseaTopCollections>많이 거래된 컬렉션</OpenseaTopCollections>
       <OnBoarding>온보딩</OnBoarding>
       <Footer>푸터</Footer>
