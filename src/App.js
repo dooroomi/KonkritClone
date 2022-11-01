@@ -2,12 +2,7 @@ import GlobalStyle from "./GlobalStyle";
 import styled from "styled-components";
 import Header from "@components/atoms/templates/Header";
 import TopBanner from "@components/atoms/templates/TopBanner";
-
-const Events = styled.div`
-  width: 100%;
-  height: 398px;
-  background-color: pink;
-`;
+import Events from "@components/atoms/templates/Events";
 
 const ItemsOnSale = styled.div`
   width: 100%;
@@ -40,7 +35,7 @@ function App() {
       <GlobalStyle />
       <Header />
       <TopBanner />
-      <Events>이벤트 부분</Events>
+      <Events />
       <ItemsOnSale>판매중인 아이템</ItemsOnSale>
       <OpenseaTopCollections>많이 거래된 컬렉션</OpenseaTopCollections>
       <OnBoarding>온보딩</OnBoarding>

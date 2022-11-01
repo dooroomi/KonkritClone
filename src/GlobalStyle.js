@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import * as colors from "@styles/colors"; //colors안에 모든 변수를 불러오는데 colors라는 오브젝트안에 불러온다
+import MarkProHeavy from "@assets/fonts/MarkPro-Heavy.woff2";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -17,6 +18,13 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'MarkPro-Heavy';
+    src: url(${MarkProHeavy}) format('woff2');
+    font-weight: 800;
+    font-style: normal;
   }
 `;
 
