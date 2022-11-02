@@ -97,7 +97,7 @@ function Events() {
       </EventsTopWrapper>
       <HideScrollX>
         {[1, 2, 3, 4].map((num) => (
-          <div>
+          <div key={num}>
             <EventCardWrapper>
               <CountDownWrapper>
                 <EachCounterWrapper>

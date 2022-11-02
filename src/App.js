@@ -5,19 +5,8 @@ import TopBanner from "@components/atoms/templates/TopBanner";
 import Events from "@components/atoms/templates/Events";
 import ItemsOnSale from "@components/atoms/templates/ItemsOnSale";
 import OpenseaTopCollections from "@components/atoms/templates/OpenseaTopCollections";
-
-const OnBoarding = styled.div`
-  width: 100%;
-  height: 415px;
-  background-color: gray;
-`;
-
-const Footer = styled.footer`
-  width: 100%;
-  height: 240px;
-  background-color: floralwhite;
-  margin-top: 100px;
-`;
+import OnBoarding from "@components/atoms/templates/OnBoarding";
+import Footer from "@components/atoms/templates/Footer";
 
 function App() {
   return (
@@ -28,9 +17,9 @@ function App() {
       <Events />
       <ItemsOnSale />
       <OpenseaTopCollections />
-      <OnBoarding>온보딩</OnBoarding>
-      <Footer>푸터</Footer>
-    </>
+      <OnBoarding />
+      <Footer />
+      </>
   );
 }
 
