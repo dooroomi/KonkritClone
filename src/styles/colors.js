@@ -13,6 +13,9 @@ export const bgPrimary = "rgb(24, 24, 27)";
 export const bgSecondary = "#27272a";
 export const bgBlack = "black";
 
+//border
+export const borderSecondary = "rgb(39, 39, 42)";
+
 //Button Color
 export const btnBannerButton = "rgba(0, 0, 0, 0.4)";
 
@@ -34,3 +37,4 @@ export const cardGradient = `
     ),
     linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15))
   `;
+
