@@ -1,43 +1,9 @@
 import styled from "styled-components";
 import * as colors from "@styles/colors";
-
-const Container = styled.div`
-  width: 100%;
-  height: 394px;
-  padding: 40px 16px;
-`;
-
-const SectionTopWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const SectionTitle = styled.span`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
-const ShowAllText = styled.span`
-  font-size: 14px;
-  color: ${colors.textSecondary};
-  margin-right: 4px;
-`;
-
-const EventCardsWrapper = styled.div`
-  margin-top: 24px;
-  display: flex;
-  gap: 16px;
-
-  //자식이 부모보다 길어지면 가로로 스크롤 생김
-  overflow-x: scroll;
-  &::-webkit-scrollbar {
-    display: none; //스크롤 안보이게
-  }
-  //밑에는 크롬말고에도 적용..?
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-`;
+import Ether from "../Ether";
+import SectionLayout from "@components/molecules/SectionLayout";
+import SectionTop from "@components/molecules/SectionTop";
+import HideScrollX from "@components/molecules/HideScrollX";
 
 const CardWrapper = styled.div`
   border-radius: 16px;
@@ -72,6 +38,9 @@ const PriceBox = styled.div`
 const CollectionTitle = styled.div`
   font-size: 12px;
   color: ${colors.textSecondary};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; //뒤쪽에 띄어쓰기가 있어도 내려가지 않는다
 `;
 
 const Title = styled.div`
@@ -80,24 +49,63 @@ const Title = styled.div`
   margin-top: 4px;
 `;
 
+const Wrapper = styled.div`
+  background-color: ${colors.bgSecondary};
+`;
+
+const PriceTitle = styled.div`
+  font-size: 10px;
+  color: ${colors.textSecondary};
+  font-weight: 700;
+`;
+
+const PriceWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+`;
+
+const PriceText = styled.div`
+  font-family: MarkPro-Heavy;
+  font-size: 14px;
+`;
+
 function ItemsOnSale() {
+  // const maxLength = 15;
+  // const collectionTitle =
+  //   "FrankenPunksFrankenPunksFrankenPunksFrankenPunksFrankenPunksFrankenPunks";
+  // const formattedTitle =
+  //   collectionTitle.length > 15
+  //     ? `${collectionTitle.slice(0, maxLength)}...`
+  //     : collectionTitle;
+  const collectionTitle = "FrankenPunksFrankenPunks    FrankenFranken Punks";
   return (
-    <Container>
-      <SectionTopWrapper>
+    <SectionLayout>
+      {/* <SectionTopWrapper>
         <SectionTitle>지금 판매중인 아이템</SectionTitle>
         <ShowAllText>아이템 전체보기</ShowAllText>
-      </SectionTopWrapper>
-      <EventCardsWrapper>
-        <CardWrapper>
-          <CardImage src="https://konkrit-prod-itemmedia-t837t51tz51i.s3.ap-northeast-2.amazonaws.com/0x1fec856e25f757fed06eb90548b0224e91095738/0x1fec856e25f757fed06eb90548b0224e91095738-6741.png"></CardImage>
-          <InfoBox>
-            <CollectionTitle>FrankenPunks</CollectionTitle>
-            <Title>#6742</Title>
-          </InfoBox>
-          <PriceBox></PriceBox>
-        </CardWrapper>
-      </EventCardsWrapper>
-    </Container>
+      </SectionTopWrapper> */}
+      <SectionTop title="지금 판매중인 아이템" showAll="아이템 전체보기" />
+      <HideScrollX>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <CardWrapper>
+            <CardImage src="https://konkrit-prod-itemmedia-t837t51tz51i.s3.ap-northeast-2.amazonaws.com/0x1fec856e25f757fed06eb90548b0224e91095738/0x1fec856e25f757fed06eb90548b0224e91095738-6741.png"></CardImage>
+            <InfoBox>
+              <CollectionTitle>{collectionTitle}</CollectionTitle>
+              <Title>#6742</Title>
+            </InfoBox>
+            <PriceBox>
+              <PriceTitle>판매가</PriceTitle>
+              <PriceWrapper>
+                <Ether />
+                <PriceText>0.01</PriceText>
+              </PriceWrapper>
+            </PriceBox>
+          </CardWrapper>
+        ))}
+      </HideScrollX>
+    </SectionLayout>
   );
 }
 

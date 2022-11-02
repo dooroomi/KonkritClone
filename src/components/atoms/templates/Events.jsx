@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import * as colors from "@styles/colors";
-
-const Container = styled.div`
-  width: 100%;
-  height: 398px;
-  /* font-family: MarkPro-Heavy; */
-  font-size: 32px;
-  padding: 40px 16px;
-`;
+import SectionLayout from "@components/molecules/SectionLayout";
+import HideScrollX from "@components/molecules/HideScrollX";
+// const Container = styled.div`
+//   width: 100%;
+//   height: 398px;
+//   /* font-family: MarkPro-Heavy; //부모폰트 때문에 자식 폰트 덮혀서 주석*/
+//   font-size: 32px;
+//   padding: 40px 16px;
+// `;
 
 const EventsTopWrapper = styled.div`
   display: flex;
@@ -33,21 +34,6 @@ const ShowAllText = styled.span`
   align-items: center;
   font-size: 14px;
   color: ${colors.textSecondary};
-`;
-
-const EventCardsWrapper = styled.div`
-  margin-top: 24px;
-  display: flex;
-  gap: 16px;
-
-  //자식이 부모보다 길어지면 가로로 스크롤 생김
-  overflow-x: scroll;
-  &::-webkit-scrollbar {
-    display: none; //스크롤 안보이게
-  }
-  //밑에는 크롬말고에도 적용..?
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 `;
 
 const EventCardWrapper = styled.div`
@@ -104,12 +90,12 @@ const EventTitle = styled.div`
 
 function Events() {
   return (
-    <Container>
+    <SectionLayout>
       <EventsTopWrapper>
         <GradientSectionTitle>KONKRIT ORIGINALS</GradientSectionTitle>
         <ShowAllText>이벤트 전체보기</ShowAllText>
       </EventsTopWrapper>
-      <EventCardsWrapper>
+      <HideScrollX>
         {[1, 2, 3, 4].map((num) => (
           <div>
             <EventCardWrapper>
@@ -138,8 +124,8 @@ function Events() {
             </EventTitles>
           </div>
         ))}
-      </EventCardsWrapper>
-    </Container>
+      </HideScrollX>
+    </SectionLayout>
   );
 }
 
