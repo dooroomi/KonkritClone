@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import * as colors from "@styles/colors";
 import HideScrollX from "@components/molecules/HideScrollX";
@@ -46,10 +48,9 @@ const Title = styled.div`
   font-family: MarkPro-Heavy;
   font-size: 14px;
   margin-top: 4px;
-`;
-
-const Wrapper = styled.div`
-  background-color: ${colors.bgSecondary};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const PriceTitle = styled.div`
@@ -71,21 +72,41 @@ const PriceText = styled.div`
 `;
 
 export default function Items() {
-  const collectionTitle = "FrankenPunksFrankenPunks    FrankenFranken Punks";
+  const [items, setItems] = useState({ items: [] });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    async function fetchItems() {
+      setIsLoading(true);
+      setIsError(false);
+      try {
+        const results = await axios("http://localhost:3000/api/items");
+        setItems(results.data);
+        setIsLoading(false);
+      } catch {
+        setIsError(true);
+        setIsLoading(false);
+      }
+    }
+    fetchItems();
+  }, []);
+  if (isLoading) return <div>로딩중</div>;
+  if (isError) return <div>에러</div>;
   return (
     <HideScrollX>
-      {[1, 2, 3, 4, 5].map((num) => (
-        <CardWrapper key={num}>
-          <CardImage src="https://konkrit-prod-itemmedia-t837t51tz51i.s3.ap-northeast-2.amazonaws.com/0x1fec856e25f757fed06eb90548b0224e91095738/0x1fec856e25f757fed06eb90548b0224e91095738-6741.png"></CardImage>
+      {items.items.map((item) => (
+        <CardWrapper key={item.id}>
+          <CardImage src={item.mediaUrl}></CardImage>
           <InfoBox>
-            <CollectionTitle>{collectionTitle}</CollectionTitle>
-            <Title>#6742</Title>
+            <CollectionTitle>{item.collectionTitle}</CollectionTitle>
+            <Title>{item.title}</Title>
           </InfoBox>
           <PriceBox>
             <PriceTitle>판매가</PriceTitle>
             <PriceWrapper>
               <Ether />
-              <PriceText>0.01</PriceText>
+              <PriceText>{item.price}</PriceText>
             </PriceWrapper>
           </PriceBox>
         </CardWrapper>
