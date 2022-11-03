@@ -1,6 +1,9 @@
+import React from "react";
 import styled from "styled-components";
 import * as colors from "@styles/colors";
 import Ether from "@components/atoms/Ether";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const CollectionList = styled.ul`
   margin-top: 16px;
@@ -29,15 +32,15 @@ const Thumbnail = styled.img`
   height: 40px;
   border-radius: 20px;
   margin-left: 24px;
-  background-color: ${colors.bgSecondary}; //img 작을떄 은은한 배경응로
+  background-color: ${colors.bgSecondary};
   object-fit: contain;
 `;
 
 const CollectionName = styled.span`
   font-weight: 500;
   margin-left: 12px;
-  font-size: 14px;
 `;
+
 const CollectionPriceInfo = styled.div`
   height: 60px;
   padding: 0px 28px;
@@ -53,7 +56,6 @@ const NormalText = styled.span`
 `;
 
 const SpanDoubleWrapper = styled.div`
-  /* grid-column: 2 / 4; */
   grid-column: span 2;
 `;
 
@@ -72,29 +74,58 @@ const PriceText = styled.span`
 `;
 
 export default function Collections() {
+  const [collections, setCollections] = useState({ openseaCollections: [] });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    async function fetchCollections() {
+      setIsLoading(true);
+      setIsError(false);
+      try {
+        const results = await axios(
+          "http://localhost:3000/api/opensea-top-collections"
+        );
+        setCollections(results.data);
+        setIsLoading(false);
+      } catch {
+        setIsError(true);
+        setIsLoading(false);
+      }
+    }
+    fetchCollections();
+  }, []);
+  if (isLoading) {
+    return <div>로딩</div>;
+  }
+
+  if (isError) {
+    return <div>에러</div>;
+  }
+
   return (
     <CollectionList>
-      {[1, 2, 3, 4, 5].map((rank) => (
-        <CollectionItem key={rank}>
+      {collections.openseaCollections.map((collection, index) => (
+        <CollectionItem key={collection.id}>
           <CollectionInfo>
-            <RankText>{rank}</RankText>
-            <Thumbnail src="https://konkrit-prod-collectionmedia-156cyqu7bx316.s3.ap-northeast-2.amazonaws.com/main/0x209e639a0ec166ac7a1a4ba41968fa967db30221.png" />
-            <CollectionName>Genuine Undead</CollectionName>
+            <RankText>{index + 1}</RankText>
+            <Thumbnail src={collection.imgUrl} alt={collection.name} />
+            <CollectionName>{collection.name}</CollectionName>
           </CollectionInfo>
           <CollectionPriceInfo>
             <NormalText>최저가</NormalText>
             <SpanDoubleWrapper>
               <PriceWrapper>
                 <Ether />
-                <PriceText>0.01</PriceText>
+                <PriceText>{collection.floorPrice}</PriceText>
               </PriceWrapper>
             </SpanDoubleWrapper>
-            <NormalText>24시간 거래량</NormalText>
+            <NormalText>24h 거래량</NormalText>
             <PriceWrapper>
               <Ether />
-              <PriceText>0.01</PriceText>
+              <PriceText>{collection.oneDayVolume}</PriceText>
             </PriceWrapper>
-            <NumberText>+5.7%</NumberText>
+            <NumberText>+{collection.oneDayVolumeChange}%</NumberText>
           </CollectionPriceInfo>
         </CollectionItem>
       ))}
