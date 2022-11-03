@@ -58,7 +58,7 @@ const PriceWrapper = styled.div`
 `;
 
 const NumberText = styled(NormalText)`
-  color: ${colors.textGreen};
+  color: ${(props)=> props.color};
 `;
 
 const PriceText = styled.span`
@@ -67,7 +67,19 @@ const PriceText = styled.span`
   margin-left: 4px;
 `;
 
+//collection.oneDayVolumeChange 글자 색상
+function getColor(number) {
+  if (number > 0) return colors.textGreen;
+  else if (number === 0) return colors.textSecondary;
+  else return colors.textRed;
+}
+
+//function get
+
 export default function Collection({ collection, rank }) {
+  const oneDayVolumeChange = collection.oneDayVolumeChange;
+  const isPositiveVolumeChange = oneDayVolumeChange > 0; // +- 기호
+  const numberColors = getColor(oneDayVolumeChange);
   return (
     <CollectionItem key={collection.id}>
       <CollectionInfo>
@@ -88,7 +100,10 @@ export default function Collection({ collection, rank }) {
           <Ether />
           <PriceText>{collection.oneDayVolume}</PriceText>
         </PriceWrapper>
-        <NumberText>+{collection.oneDayVolumeChange}%</NumberText>
+        <NumberText color={numberColors}>
+          {isPositiveVolumeChange ? "+" : ""}
+          {collection.oneDayVolumeChange}%
+        </NumberText>
       </CollectionPriceInfo>
     </CollectionItem>
   );
