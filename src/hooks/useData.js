@@ -22,7 +22,7 @@ function useData(initialState, endpoint) {
     fetchData();
   }, [endpoint]);
 
-  return {data, isLoading, isError}; // {data:data, isLoading:isLoading, isError:isError}
+  return { data, isLoading, isError }; // {data:data, isLoading:isLoading, isError:isError}
 }
 
 export default useData;
