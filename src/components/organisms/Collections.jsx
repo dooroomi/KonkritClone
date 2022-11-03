@@ -2,12 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import useData from "@hooks/useData";
 import Collection from "@components/molecules/Collection";
+import LoadingSpinner from "@components/atoms/LoadingSpinner";
 
 const CollectionList = styled.ul`
   margin-top: 16px;
 `;
 
-
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 1604px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default function Collections() {
   const { data, isLoading, isError } = useData(
@@ -15,7 +22,11 @@ export default function Collections() {
     "http://localhost:3000/api/opensea-top-collections"
   );
   if (isLoading) {
-    return <div>로딩</div>;
+    return (
+      <LoadingWrapper>
+        <LoadingSpinner />
+      </LoadingWrapper>
+    );
   }
 
   if (isError) {
@@ -25,7 +36,7 @@ export default function Collections() {
   return (
     <CollectionList>
       {data.openseaCollections.map((collection, index) => (
-        <Collection key={index} collection={collection} rank={index+1} />
+        <Collection key={index} collection={collection} rank={index + 1} />
       ))}
     </CollectionList>
   );
